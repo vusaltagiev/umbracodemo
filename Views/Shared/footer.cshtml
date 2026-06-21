@@ -1,1 +1,14 @@
-﻿<h1>Footer</h1>
+﻿@using System.Collections
+@inherits UmbracoViewPage
+@{
+    var startPage = Model.AncestorOrSelf<StartPage>();
+    var copyRightText = startPage.Value("copyRightText");
+
+}
+
+
+<footer class="footer">
+    <div class="container">
+        <p>@copyRightText</p>
+    </div>
+</footer>

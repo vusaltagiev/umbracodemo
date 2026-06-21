@@ -1,16 +1,18 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.SubPage>
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Contact>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = "master.cshtml";
     var headline = Model.Headline;
-    var description = Model.Description;
+    var image = Model.Image;
 }
+
+
 
 <div class="container section">
     @if (!string.IsNullOrEmpty(headline))
     {
         <h1>@headline</h1>
     }
-    @Html.Raw(description)
+    <img src="@image?.Url()" style="max-width:300px;"/>
 </div>

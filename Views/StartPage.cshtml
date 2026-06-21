@@ -2,18 +2,26 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.StartPage>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = "master.cshtml";
-	var heroTitle = Model.Value("heroTitle");
-	var heroText = Model.Value("heroText");
-	var heroImage = Model.Value("heroImage");
+    Layout = "master.cshtml";
+    var heroTitle = Model.HeroTitle;
+    var heroText = Model.HeroText;
+    var heroImages = Model.HeroImage;
 }
 
 <div class="container hero">
-	<div>
-		<h1>@heroTitle</h1>
-		<p>@heroText</p>
-		<a class="btn">Våra tjänster</a>
-	</div>
-	<div><img src=" @heroImage"></div>
+    <div>
+        <h1>@heroTitle</h1>
+        <p>@heroText</p>
+        <a class="btn">Våra tjänster</a>
+    </div>
+    <div>
+        @if (heroImages != null && heroImages.Count() > 0)
+        {
+            foreach (var image in heroImages)
+            {
+                <img src=" @image?.Url()" style="max-width:300px;">
+            }
+        }
+    </div>
 </div>
 
