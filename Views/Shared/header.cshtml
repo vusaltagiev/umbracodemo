@@ -16,10 +16,11 @@
                 foreach (var subPage in children)
                 {
                     var umbracoNaviHide = subPage.Value<bool>("UmbracoNaviHide");
+                    var menutitle = subPage.Value<string>("MenuTitle");
                     var pageHeadline = subPage.Value<string>("Headline");
                     @if (umbracoNaviHide == false && subPage.ContentType.Alias != "contact")
                     {
-                        <a href="@subPage.Url()">@pageHeadline</a>
+                        <a href="@subPage.Url()">@menutitle</a>
                     }
                 }
             }
@@ -27,9 +28,10 @@
         @if(contactPage != null)
         {
             var hideContactUs = contactPage.Value<bool>("UmbracoNaviHide");
-            if(hideContactUs == false)
+            var cMenutitle = contactPage.Value<string>("MenuTitle");
+            if (hideContactUs == false)
             {
-                <a class="btn" href="@contactPage.Url()">@contactPage.</a>
+                <a class="btn" href="@contactPage.Url()">@cMenutitle</a>
             }
         }
     </div>
