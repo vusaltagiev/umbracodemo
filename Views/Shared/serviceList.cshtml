@@ -1,0 +1,32 @@
+﻿@using System.Collections
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@inherits UmbracoViewPage
+@{
+    var startPage = Model.AncestorOrSelf<StartPage>();
+    var serviceList = startPage?.Value<List<IPublishedContent>>("ServiceList");
+}
+
+<div class="grid grid-cols-4" style="border:2px solid red;">
+    @if (serviceList != null && serviceList.Count() > 0)
+    {
+            @foreach (var service in serviceList)
+            {
+                var serviceHeadline = service.Value("Headline");
+                var serviceImage = service.Value<IPublishedContent>("Image");
+                var description = service.Value("Description");
+            <div class="grid grid-cols-[1fr_2fr] gap-4 items-start mr-2">
+                
+                        <img src="@serviceImage?.Url()" style="max-width:300px;">
+                  
+                <div class="flex flex-col space-y-1">
+                       <h4>@serviceHeadline</h4>
+                    <p style="border:2px solid red;">
+                        @description
+                    </p>
+                   </div>
+
+                </div>
+            }
+    }
+</div>
