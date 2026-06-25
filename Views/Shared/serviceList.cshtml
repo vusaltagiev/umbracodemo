@@ -4,7 +4,8 @@
 @inherits UmbracoViewPage
 @{
     var startPage = Model.AncestorOrSelf<StartPage>();
-    var serviceList = startPage?.Value<List<IPublishedContent>>("ServiceList");
+    var settingsPage = startPage?.Value<IPublishedContent>("settingsPage");
+    var serviceList = settingsPage?.Value<List<IPublishedContent>>("serviceList");
 }
 
 <div class="grid grid-cols-4" style="border:2px solid red;">

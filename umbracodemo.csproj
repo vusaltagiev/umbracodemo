@@ -6,6 +6,7 @@
     <CompressionEnabled>false</CompressionEnabled> <!-- Disable compression. E.g. for umbraco backoffice files. These files should be precompressed by node and not let dotnet handle it -->
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Views\Shared\ColorListComponent.cshtml" />
     <Content Remove="Views\Shared\serviceList.cshtml" />
   </ItemGroup>
   <ItemGroup>

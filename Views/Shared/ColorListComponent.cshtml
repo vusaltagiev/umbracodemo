@@ -1,12 +1,13 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ColorListComponent>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits UmbracoViewPage
 @{
-	Layout = null;
+    Layout = null;
     var startPage = Model.AncestorOrSelf<StartPage>();
-    var colorList = startPage?.Value<List<IPublishedContent>>("colorList");
-    var headline = startPage?.Value("headline");
-    var description = startPage?.Value("description");
+    var settingsPage = startPage?.Value<IPublishedContent>("settingsPage");
+    var colorListContainerNode = settingsPage?.Value<IPublishedContent>("colorListContainer");
+    var headline = colorListContainerNode?.Value("headline");
+    var description = colorListContainerNode?.Value("description");
 }
 
 <div class="grid grid-cols-4" style="border:2px solid red;">
@@ -16,27 +17,5 @@
     <p>
         @description
     </p>
-    @if (colorList != null && colorList.Count() > 0)
-    {
-        @foreach (var colors in colorList)
-        {
-            var heline1 = colors.Value("headline");
-            var colorHeadline = colors.Value("foilColors");
-            var colorImage = colors.Value<IPublishedContent>("foilImage");
-            @* var description = service.Value("Description"); *@
-            <div class="grid grid-cols-[1fr_2fr] gap-4 items-start mr-2">
-
-                <img src="@colorImage?.Url()" style="max-width:300px;">
-
-                <div class="flex flex-col space-y-1">
-                    <h4>@colorHeadline</h4>
-                    <h6>@headline</h6>
-                    @* <p style="border:2px solid red;">
-                        @description
-                    </p> *@
-                </div>
-
-            </div>
-        }
-    }
+    @await Html.PartialAsync("~/Views/Shared/ColorList.cshtml")
 </div>

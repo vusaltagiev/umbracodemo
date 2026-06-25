@@ -1,0 +1,33 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits UmbracoViewPage
+@{
+    Layout = null;
+    var startPage = Model.AncestorOrSelf<StartPage>();
+    var settingsPage = startPage?.Value<IPublishedContent>("settingsPage");
+    var colorListContainerNode = settingsPage?.Value<IPublishedContent>("colorListContainer");
+    var colorList = colorListContainerNode?.Children();
+}
+
+<div class="grid grid-cols-4" style="border:2px solid blue;">
+    @if (colorList != null && colorList.Count() > 0)
+    {
+        @foreach (var colors in colorList)
+        {
+            var colorHeadline = colors.Value("headline");
+            var foilColor = colors.Value("foilColors");
+            var colorImage = colors.Value<IPublishedContent>("foilImage");
+            @* var description = service.Value("Description"); *@
+            <div class="grid grid-cols-[1fr_2fr] gap-4 items-start mr-2">
+
+                <img src="@colorImage?.Url()" style="max-width:300px;">
+
+                <div class="flex flex-col space-y-1">
+                    <h4>@colorHeadline</h4>
+                    <h6>@foilColor</h6>
+                </div>
+
+            </div>
+        }
+    }
+</div>
