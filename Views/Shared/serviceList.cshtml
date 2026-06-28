@@ -16,7 +16,7 @@
                 var serviceHeadline = service.Value("Headline");
                 var serviceImage = service.Value<IPublishedContent>("Image");
                 var description = service.Value("Description");
-            <div class="grid grid-cols-[1fr_2fr] gap-4 items-start mr-2">
+            <div class="mr-2 grid grid-cols-[1fr_2fr] items-start gap-4">
                 
                         <img src="@serviceImage?.Url()" style="max-width:300px;">
                   

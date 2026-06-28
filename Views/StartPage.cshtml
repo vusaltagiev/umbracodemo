@@ -8,7 +8,7 @@
     var heroImages = Model.HeroImage;
 }
 
-<div class="relative h-screen w-full">
+<div class="relative h-dvh w-full">
     @if (heroImages != null && heroImages.Count() > 0)
     {
         foreach (var image in heroImages)
@@ -17,19 +17,22 @@
         }
     }
 
-    <div class="absolute inset-0 z-10 grid grid-cols-1 md:grid-cols-2 items-center px-8" style="border:2px solid red;">
+    <div class="absolute inset-0 z-10 grid grid-cols-1 items-center px-8 md:grid-cols-2" style="border:2px solid red;">
         <div style="border:2px solid red" ;>
-            <div class="bg-white/30 backdrop-brightness-50 p-4 pl-4 pr-12 md:pl-8 md:pr-24 space-y-4">
+            <div class="space-y-4 bg-white/30 p-4 pr-12 pl-4 backdrop-brightness-50 md:pr-24 md:pl-8">
                 <h1 class="text-4xl font-bold">@heroTitle</h1>
                 <p>@heroText</p>
                 <a class="btn">Våra tjänster</a>
             </div>
         </div>
     </div>
+</div>
     <div class="mb-5">
         @await Html.PartialAsync("~/Views/Shared/serviceList.cshtml")
     </div>
     <div class="mt-5">
         @await Html.PartialAsync("~/Views/Shared/ColorListComponent.cshtml")
     </div>
-</div>
+    <div class="mt-5">
+        @await Html.PartialAsync("~/Views/Shared/BeforeAfterImageContainer.cshtml")
+    </div>
