@@ -5,14 +5,17 @@
 @{
     Layout = "master.cshtml";
     var headline = Model.Headline;
+    var description = Model.Description;
     var startPage = Model.AncestorOrSelf<StartPage>();
 }
 
 <div class="section container">
-    @if (!string.IsNullOrEmpty(headline))
+    @if (!string.IsNullOrEmpty(headline) && !string.IsNullOrEmpty(description))
     {
-        var message = "Hello world!";
-        <h1>@headline</h1>
+        <div class="mr-auto mb-5 w-1/2">
+            <h1 class="mb-4 text-3xl font-bold">@headline</h1>
+            <p class="text-gray-700">@description</p>
+       </div>
 
         @await Html.PartialAsync("~/Views/Shared/serviceList.cshtml");
 
