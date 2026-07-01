@@ -8,20 +8,31 @@
     var heroImages = Model.HeroImage;
 }
 
-<div class="container hero">
-    <div>
-        <h1>@heroTitle</h1>
-        <p>@heroText</p>
-        <a class="btn">Våra tjänster</a>
-    </div>
-    <div>
-        @if (heroImages != null && heroImages.Count() > 0)
+<div class="relative h-dvh w-full">
+    @if (heroImages != null && heroImages.Count() > 0)
+    {
+        foreach (var image in heroImages)
         {
-            foreach (var image in heroImages)
-            {
-                <img src=" @image?.Url()" style="max-width:300px;">
-            }
+            <img src=" @image?.Url()" class="h-full w-full object-cover" style="border:2px solid blue;">
         }
+    }
+
+    <div class="absolute inset-0 z-10 grid grid-cols-1 items-center px-8 md:grid-cols-2" style="border:2px solid red;">
+        <div style="border:2px solid red" ;>
+            <div class="space-y-4 bg-white/30 p-4 pr-12 pl-4 backdrop-brightness-50 md:pr-24 md:pl-8">
+                <h1 class="text-4xl font-bold">@heroTitle</h1>
+                <p>@heroText</p>
+                <a class="btn">Våra tjänster</a>
+            </div>
+        </div>
     </div>
 </div>
-
+    <div class="mb-5">
+        @await Html.PartialAsync("~/Views/Shared/serviceList.cshtml")
+    </div>
+    <div class="mt-5">
+        @await Html.PartialAsync("~/Views/Shared/ColorListComponent.cshtml")
+    </div>
+    <div class="mt-5">
+        @await Html.PartialAsync("~/Views/Shared/BeforeAfterImageContainer.cshtml")
+    </div>

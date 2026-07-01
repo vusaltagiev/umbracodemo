@@ -1,0 +1,29 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits UmbracoViewPage
+@{
+    Layout = null;
+    var startPage = Model.AncestorOrSelf<StartPage>();
+    var settingsPage = startPage?.Value<IPublishedContent>("settingsPage");
+    var beforeAfterImageNode = settingsPage?.Value<IPublishedContent>("beforeAfterImageContainer");
+    var beforeAfterImaget = beforeAfterImageNode?.Children();
+}
+
+<div class="grid grid-cols-4" style="border:2px solid blue;">
+    @if (beforeAfterImaget != null && beforeAfterImaget.Count() > 0)
+    {
+        @foreach (var image in beforeAfterImaget)
+        {
+
+            var beforeImage = image.Value<IPublishedContent>("beforeImage");
+            var afterImage = image.Value<IPublishedContent>("afterImage");
+            <div class="mr-2 grid grid-cols-[1fr_2fr] items-start gap-4">
+
+                <img src="@beforeImage?.Url()" style="max-width:400px;">
+
+                <img src="@afterImage?.Url()" style="max-width:400px;">
+
+            </div>
+        }
+    }
+</div>

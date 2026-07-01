@@ -4,32 +4,38 @@
     var startPage = Model.AncestorOrSelf<StartPage>();
     var children = startPage.Children;
     var contactPage = children?.FirstOrDefault(x => x.ContentType.Alias == "contact");
+    var quotePage = children?.FirstOrDefault(x => x.ContentType.Alias == "quote");
     var siteName = startPage.Value("siteName");
 }
 
 <header class="header">
-    <div class="container nav">
-        <div class="logo"><a href="/">@siteName</div>
+    <div class="nav container">
+        <div class="logo"><a href="/">@siteName</a></div>
         <nav>
             @if (children != null && children.Count() > 0)
             {
+                <a href="/">@siteName</a>
                 foreach (var subPage in children)
                 {
                     var umbracoNaviHide = subPage.Value<bool>("UmbracoNaviHide");
+                    var menutitle = subPage.Value<string>("MenuTitle");
                     var pageHeadline = subPage.Value<string>("Headline");
-                    @if (umbracoNaviHide == false && subPage.ContentType.Alias != "contact")
+                    @if (umbracoNaviHide == false && subPage.ContentType.Alias != "quote")
                     {
-                        <a href="@subPage.Url()">@pageHeadline</a>
+                        <a href="@subPage.Url()">@menutitle</a>
                     }
                 }
+
             }
         </nav>
-        @if(contactPage != null)
+        @if (quotePage != null)
         {
-            var hideContactUs = contactPage.Value<bool>("UmbracoNaviHide");
-            if(hideContactUs == false)
+            var hideContactUs = quotePage.Value<bool>("UmbracoNaviHide");
+            var cMenutitle = quotePage.Value<string>("MenuTitle");
+            if (hideContactUs == false)
             {
-                <a class="btn" href="@contactPage.Url()">@contactPage.Name</a>
+               
+                <a class="btn" href="@quotePage.Url()">@cMenutitle</a>
             }
         }
     </div>

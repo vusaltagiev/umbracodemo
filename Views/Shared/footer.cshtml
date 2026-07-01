@@ -3,11 +3,8 @@
 @{
     var startPage = Model.AncestorOrSelf<StartPage>();
     var copyRightText = startPage.Value("copyRightText");
-
 }
-
-
-<footer class="footer">
+<footer class="footer mt-4" style="border:2px solid red">
     <div class="container">
         <p>@copyRightText</p>
     </div>

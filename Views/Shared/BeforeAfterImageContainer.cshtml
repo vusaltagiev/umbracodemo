@@ -1,0 +1,22 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@* @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.BeforeAfterImageContainer> *@
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits UmbracoViewPage
+@{
+	Layout = null;
+    var startPage = Model.AncestorOrSelf<StartPage>();
+    var settingsPage = startPage?.Value<IPublishedContent>("settingsPage");
+    var beforeAfterImageContainerNode = settingsPage?.Value<IPublishedContent>("beforeAfterImageContainer");
+    var headline = beforeAfterImageContainerNode?.Value("headline");
+    var description = beforeAfterImageContainerNode?.Value("description");
+}
+
+<div>
+    <h1 class="text-black" style="border:2px solid blue;">
+        @headline
+    </h1>
+    <p>
+        @description
+    </p>
+    @await Html.PartialAsync("~/Views/Shared/BeforeAfterImageList.cshtml")
+</div>

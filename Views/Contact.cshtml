@@ -9,10 +9,28 @@
 
 
 
-<div class="container section">
+<div class="section container">
     @if (!string.IsNullOrEmpty(headline))
     {
         <h1>@headline</h1>
     }
-    <img src="@image?.Url()" style="max-width:300px;"/>
+    <img src="@image?.Url()" class="rounded-lg" style="max-width:300px;"/>
+
+
+    <hr />
+
+    <div class="grid grid-cols-4 gap-4">
+        @for (var i = 0; i < 4; i++)
+        {
+            Random rand = new Random();
+
+            var colorR = rand.Next(0,255);
+            var colorG = rand.Next(0, 100);
+            var colorB = rand.Next(100, 255);
+
+            <div style="background-color:rgb(@colorR, @colorG, @colorB)">01</div>
+        }
+    </div>
+
+
 </div>

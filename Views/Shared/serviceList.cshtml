@@ -6,9 +6,10 @@
     var startPage = Model.AncestorOrSelf<StartPage>();
     var settingsPage = startPage?.Value<IPublishedContent>("settingsPage");
     var serviceList = settingsPage?.Value<List<IPublishedContent>>("serviceList");
+    var serviceListPage = settingsPage?.Value<List<IPublishedContent>>("serviceListPage");
 }
 
-<div class="grid grid-cols-4" style="border:2px solid red;">
+<div class="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-4" style="border:2px solid blue;">
     @if (serviceList != null && serviceList.Count() > 0)
     {
             @foreach (var service in serviceList)
@@ -17,12 +18,15 @@
                 var serviceImage = service.Value<IPublishedContent>("Image");
                 var description = service.Value("Description");
             <div class="grid grid-cols-[1fr_2fr] gap-4 items-start mr-2">
-                
-                        <img src="@serviceImage?.Url()" style="max-width:300px;">
+
+            <div class="flex flex-row items-start gap-4 rounded-lg bg-white p-4 shadow-sm">
+                    <div class="mb-4 flex h-20 w-20 items-center justify-center">
+                        <img src="@serviceImage?.Url()">
+                    </div>
                   
-                <div class="flex flex-col space-y-1">
-                       <h4>@serviceHeadline</h4>
-                    <p style="border:2px solid red;">
+                    <div class="flex w-full flex-col space-y-2 text-left">
+                    <h4 class="text-lg font-semibold text-gray-900">@serviceHeadline</h4>
+                    <p class="text-sm text-gray-600" style="border:2px solid red;">
                         @description
                     </p>
                    </div>
