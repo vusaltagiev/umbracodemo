@@ -1,0 +1,21 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits UmbracoViewPage
+@{
+    Layout = null;
+    var startPage = Model.AncestorOrSelf<StartPage>();
+    var settingsPage = startPage?.Value<IPublishedContent>("settingsPage");
+    var colorListContainerNode = settingsPage?.Value<IPublishedContent>("colorListContainer");
+    var headline = colorListContainerNode?.Value("headline");
+    var description = colorListContainerNode?.Value("description");
+}
+
+<div class="grid grid-cols-4" style="border:2px solid red;">
+    <h1 class="text-black" style="border:2px solid blue;">
+        @headline
+    </h1>
+    <p>
+        @description
+    </p>
+    @await Html.PartialAsync("~/Views/Shared/ColorList.cshtml")
+</div>

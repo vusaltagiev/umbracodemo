@@ -1,0 +1,21 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Services>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@{
+    Layout = "master.cshtml";
+    var headline = Model.Headline;
+    var startPage = Model.AncestorOrSelf<StartPage>();
+}
+
+<div class="container section">
+    @if (!string.IsNullOrEmpty(headline))
+    {
+        var message = "Hello world!";
+        <h1>@headline</h1>
+
+        @await Html.PartialAsync("~/Views/Shared/serviceList.cshtml");
+
+    }
+
+</div>

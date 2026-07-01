@@ -1,0 +1,15 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ColorsMaterials>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "master.cshtml";
+    var headline = Model.Headline;
+}
+
+<div class="container section">
+    @if (!string.IsNullOrEmpty(headline))
+    {
+        <h1>@headline</h1>
+    }
+    @await Html.PartialAsync("~/Views/Shared/ColorListComponent.cshtml")
+</div>
