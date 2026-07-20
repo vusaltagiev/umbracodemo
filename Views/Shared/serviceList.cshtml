@@ -16,21 +16,22 @@
                 var serviceHeadline = service.Value("Headline");
                 var serviceImage = service.Value<IPublishedContent>("Image");
                 var description = service.Value("Description");
-            <div class="grid grid-cols-[1fr_2fr] gap-4 items-start mr-2">
 
-            <div class="flex flex-row items-start gap-4 rounded-lg bg-white p-4 shadow-sm">
+            <div class="mr-2 grid grid-cols-[1fr_2fr] items-start gap-4">
+
+                <div class="flex flex-row items-start gap-4 rounded-lg bg-white p-4 shadow-sm">
                     <div class="mb-4 flex h-20 w-20 items-center justify-center">
                         <img src="@serviceImage?.Url()">
                     </div>
                   
                     <div class="flex w-full flex-col space-y-2 text-left">
-                    <h4 class="text-lg font-semibold text-gray-900">@serviceHeadline</h4>
-                    <p class="text-sm text-gray-600" style="border:2px solid red;">
-                        @description
-                    </p>
-                   </div>
-
+                        <h4 class="text-lg font-semibold text-gray-900">@serviceHeadline</h4>
+                        <p class="text-sm text-gray-600" style="border:2px solid red;">
+                            @description
+                         </p>
+                    </div>
                 </div>
+            </div>
             }
     }
 </div>
