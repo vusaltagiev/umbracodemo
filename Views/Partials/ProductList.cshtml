@@ -1,0 +1,39 @@
+﻿@using umbracodemo.Models
+@model List<NorthWindProduct>
+@{
+    var products = Model;
+}
+
+<div class="row">
+    <div>
+        <table class="table-bordered table">
+            <thead>
+                <tr>
+                    <th>
+                        Kategoriid
+                    </th>
+                    <th>
+                        Produktnamn
+                    </th>
+                    <th>
+                        Produktpris
+                    </th>
+                </tr>
+            </thead>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>
+                        @product.CategoryId
+                    </td>
+                    <td>
+                        @product.ProductName
+                    </td>
+                    <td>
+                        $@product.UnitPrice
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

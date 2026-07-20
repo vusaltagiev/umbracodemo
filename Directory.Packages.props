@@ -4,6 +4,7 @@
     <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="Dapper" Version="2.1.79" />
     <PackageVersion Include="Umbraco.Cms" Version="17.4.2" />
     <PackageVersion Include="Umbraco.Cms.DevelopmentMode.Backoffice" Version="17.4.2" />
     <PackageVersion Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />

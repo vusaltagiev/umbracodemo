@@ -1,4 +1,7 @@
 
+using Microsoft.Data.SqlClient;
+using System.Data;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.CreateUmbracoBuilder()
@@ -6,6 +9,13 @@ builder.CreateUmbracoBuilder()
     .AddWebsite()
     .AddComposers()
     .Build();
+
+builder.Services.AddTransient<IDbConnection>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var connectionString = config.GetConnectionString("NorthwindDb");
+    return new SqlConnection(connectionString);
+});
 
 WebApplication app = builder.Build();
 
