@@ -1,0 +1,21 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IEnumerable<IPublishedContent>>
+
+<div class="hidden sm:mx-auto sm:flex sm:items-center">
+  <div class="flex space-x-4">
+    <a href="/" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Hem</a>
+    
+    @if (Model != null)
+    {
+        foreach (var subPage in Model)
+        {
+            var umbracoNaviHide = subPage.Value<bool>("UmbracoNaviHide");
+            var menutitle = subPage.Value<string>("MenuTitle") ?? subPage.Name;
+            
+            if (!umbracoNaviHide && subPage.ContentType.Alias != "quote")
+            {
+                <a href="@subPage.Url()" class="px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">@menutitle</a>
+            }
+        }
+    }
+  </div>
+</div>

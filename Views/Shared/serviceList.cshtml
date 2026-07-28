@@ -8,7 +8,7 @@
     var serviceList = settingsPage?.Value<List<IPublishedContent>>("serviceList");
 }
 
-<div class="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-4" style="border:2px solid blue;">
+<div class="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-4">
     @if (serviceList != null && serviceList.Count() > 0)
     {
             @foreach (var service in serviceList)
@@ -17,20 +17,21 @@
                 var serviceImage = service.Value<IPublishedContent>("Image");
                 var description = service.Value("Description");
 
-            <div class="mr-2 grid grid-cols-[1fr_2fr] items-start gap-4">
+            <div class="flex flex-row items-start gap-2 rounded-lg bg-white p-4 shadow-sm">
 
-                <div class="flex flex-row items-start gap-4 rounded-lg bg-white p-4 shadow-sm">
-                    <div class="mb-4 flex h-20 w-20 items-center justify-center">
-                        <img src="@serviceImage?.Url()">
-                    </div>
-                  
-                    <div class="flex w-full flex-col space-y-2 text-left">
-                        <h4 class="text-lg font-semibold text-gray-900">@serviceHeadline</h4>
-                        <p class="text-sm text-gray-600" style="border:2px solid red;">
-                            @description
-                         </p>
-                    </div>
+              
+                <div class="flex h-16 w-16 shrink-0 items-center justify-center">
+                    <img src="@serviceImage?.Url()" alt="@serviceHeadline" class="h-full w-full object-contain" />
                 </div>
+
+             
+                <div class="flex flex-col space-y-1 text-left">
+                    <h4 class="text-lg leading-normal font-semibold text-gray-900">@serviceHeadline</h4>
+                    <p class="text-sm text-gray-600">
+                        @description
+                    </p>
+                </div>
+
             </div>
             }
     }

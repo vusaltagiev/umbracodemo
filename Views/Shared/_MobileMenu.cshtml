@@ -1,0 +1,32 @@
+﻿@using Umbraco.Cms.Core.Models.PublishedContent
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IPublishedContent>
+@{
+    var children = Model?.Children();
+    var quotePage = children?.FirstOrDefault(x => x.ContentType.Alias == "quote");
+}
+
+<el-disclosure id="mobile-menu" hidden class="block sm:hidden">
+  <div class="space-y-1 px-2 pt-2 pb-3">
+    <a href="/" class="block rounded-md px-3 py-2 text-base font-medium hover:text-white">Hem</a>
+    
+    @if (children != null)
+    {
+        foreach (var subPage in children)
+        {
+            var umbracoNaviHide = subPage.Value<bool>("UmbracoNaviHide");
+            var menutitle = subPage.Value<string>("MenuTitle") ?? subPage.Name;
+            
+            if (!umbracoNaviHide && subPage.ContentType.Alias != "quote")
+            {
+                <a href="@subPage.Url()" class="block rounded-md px-3 py-2 text-base font-medium hover:text-white">@menutitle</a>
+            }
+        }
+    }
+    
+    @if (quotePage != null && !quotePage.Value<bool>("UmbracoNaviHide"))
+    {
+        var cMenutitle = quotePage.Value<string>("MenuTitle") ?? "Få offert";
+            <a class="btn shadow-xs bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500" href="@quotePage.Url()">@cMenutitle</a>
+    }
+  </div>
+</el-disclosure>
