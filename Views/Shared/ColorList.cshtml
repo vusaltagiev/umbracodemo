@@ -9,24 +9,33 @@
     var colorList = colorListContainerNode?.Children();
 }
 
-<div class="grid grid-cols-4" style="border:2px solid blue;">
-    @if (colorList != null && colorList.Count() > 0)
+<div class="grid grid-cols-4 gap-x-8 gap-y-4" style="border:2px solid blue;">
+    @if (colorList != null && colorList.Any()) 
     {
         @foreach (var colors in colorList)
         {
-            var colorHeadline = colors.Value("headline");
-            var foilColor = colors.Value("foilColors");
-            var colorImage = colors.Value<IPublishedContent>("foilImage");
-            @* var description = service.Value("Description"); *@
-            <div class="mr-2 grid grid-cols-[1fr_2fr] items-start gap-4">
-
-                <img src="@colorImage?.Url()" style="max-width:300px;">
-
+        var colersItem = colors.Children();
+            <div class="mr-2 grid items-start gap-4">
                 <div class="flex flex-col space-y-1">
-                    <h4>@colorHeadline</h4>
-                    <h6>@foilColor</h6>
+                @if (colersItem != null && colersItem.Any())
+                {
+                    @foreach (var color in colersItem)
+                        {
+                        var foilColor = color.Value("foilColors");
+                        var colorImage = color.Value<IPublishedContent>("foilImage");
+                            <div class="flex flex-col space-y-2">
+                                <div class="w-full overflow-hidden rounded-lg border border-gray-200">
+                                    <img src="@colorImage?.Url()" class="h-auto w-full object-cover" style="max-width:300px;">
+                              </div>
+                                <div class="flex flex-col">
+                                    <h6 class="text-sm font-medium text-gray-600" style="border:2px solid blue">@foilColor</h6>
+                                    <h5 class="text-base font-bold text-gray-900">@color.Name</h5>
+                                    <h4>@colors.Name</h4>
+                              </div>
+                            </div>
+                        }
+                    }
                 </div>
-
             </div>
         }
     }
