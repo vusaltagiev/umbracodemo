@@ -9,6 +9,7 @@
     var colorListContainerNode = settingsPage?.Value<IPublishedContent>("colorListContainer");
     var headline = colorListContainerNode?.Value("headline");
     var description = colorListContainerNode?.Value("description");
+    var image = colorListContainerNode?.Value<IPublishedContent>("image");
 
     var heroBlockList = Model.Value<BlockListModel>("Hero");
     var heroContent = heroBlockList?.FirstOrDefault()?.Content;
@@ -36,24 +37,34 @@
             <div class="max-w-xl space-y-4 border border-white/10 bg-black/40 p-6 backdrop-blur-md md:p-8">
               @if (!string.IsNullOrEmpty(titleString))
                {
-                    <h1 class="mb-4 text-3xl leading-tight font-semibold tracking-tight text-white sm:text-5xl">
+                    <h1 class="mb-4 text-4xl font-extrabold tracking-tighter text-white sm:text-6xl sm:leading-none">
                   @heroTitle
                 </h1>
                 
                }
               @if (!string.IsNullOrEmpty(descriptionString))
                {
-                <p class="text-lg leading-relaxed text-white">@heroDescription</p>
+                <p class="max-w-2xl leading-relaxed font-normal text-zinc-300 text-white sm:text-lg">@heroDescription</p>
                }
             </div>
             
        </div>
     </div>
 }
-<div class="mt-3">
-    <p>  @headline</p>
-     <p>
-         @description
-     </p>
-       @await Html.PartialAsync("~/Views/Shared/ColorList.cshtml")
+<div class="border border-white/10 bg-black/40 p-6 backdrop-blur-md md:p-8">
+    <div class="flex flex-col gap-6 md:flex-row md:gap-10">
+        <div class="md:w-1/2">
+            <img src="@image?.Url()" alt="A relevant image" class="drop-shadow-xl/50 rounded-lg fill-white shadow-lg">
+        </div>
+        <div class="md:w-1/2">
+            <h2 class="mb-4 text-4xl font-extrabold tracking-tighter text-white sm:text-6xl sm:leading-none">@headline</h2>
+            <p class="max-w-2xl leading-relaxed font-normal text-white sm:text-lg">
+                @description
+            </p>
+        </div>
+    </div>
+</div>
+
+<div>
+    @await Html.PartialAsync("~/Views/Shared/ColorList.cshtml")
 </div>

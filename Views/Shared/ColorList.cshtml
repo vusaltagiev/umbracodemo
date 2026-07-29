@@ -9,34 +9,141 @@
     var colorList = colorListContainerNode?.Children();
 }
 
-<div class="grid grid-cols-4 gap-x-8 gap-y-4" style="border:2px solid blue;">
-    @if (colorList != null && colorList.Any()) 
-    {
-        @foreach (var colors in colorList)
-        {
-        var colersItem = colors.Children();
-            <div class="mr-2 grid items-start gap-4">
-                <div class="flex flex-col space-y-1">
-                @if (colersItem != null && colersItem.Any())
+<!-- Huvudbox med snygg bakgrund -->
+<div class="mx-auto w-full max-w-7xl border border-white/10 bg-zinc-900 p-6 text-white shadow-xl backdrop-blur-md md:p-8">
+
+    <div class="flex flex-col gap-8 md:flex-row">
+
+        <!-- VÄNSTERSPALT: Kategorier (utifrån colors.Name) -->
+        <div class="w-full flex-shrink-0 space-y-3 border-b border-white/10 pb-6 md:w-64 md:border-r md:border-b-0 md:pr-6 md:pb-0">
+            <h3 class="mb-4 text-xs font-bold tracking-wider text-slate-400 uppercase">
+                Välj kategori
+            </h3>
+
+            <nav class="flex flex-row gap-2 overflow-x-auto pb-2 md:flex-col md:overflow-visible md:pb-0">
+                <!-- Visa alla -->
+                <button onclick="filterCategory('all', this)"
+                        class="category-btn active-btn border border-white/20 bg-white/10 px-4 py-2.5 text-left text-sm font-medium whitespace-nowrap text-white transition-all">
+                    Alla färger
+                </button>
+
+                @if (colorList != null && colorList.Any())
                 {
-                    @foreach (var color in colersItem)
-                        {
-                        var foilColor = color.Value("foilColors");
-                        var colorImage = color.Value<IPublishedContent>("foilImage");
-                            <div class="flex flex-col space-y-2">
-                                <div class="w-full overflow-hidden rounded-lg border border-gray-200">
-                                    <img src="@colorImage?.Url()" class="h-auto w-full object-cover" style="max-width:300px;">
-                              </div>
-                                <div class="flex flex-col">
-                                    <h6 class="text-sm font-medium text-gray-600" style="border:2px solid blue">@foilColor</h6>
-                                    <h5 class="text-base font-bold text-gray-900">@color.Name</h5>
-                                    <h4>@colors.Name</h4>
-                              </div>
-                            </div>
-                        }
+                    @foreach (var colors in colorList)
+                    {
+                        var catId = colors.Name.ToLower().Replace(" ", "-");
+                        <button onclick="filterCategory('@catId', this)"
+                                class="category-btn px-4 py-2.5 text-left text-sm font-medium whitespace-nowrap text-slate-300 transition-all hover:bg-white/5 hover:text-white">
+                            @colors.Name
+                        </button>
                     }
-                </div>
-            </div>
+                }
+            </nav>
+        </div>
+
+        <!-- HÖGERSPALT: Färger per kategori med Slider (4 i rad) -->
+        <div class="min-w-0 flex-1 space-y-10">
+            @if (colorList != null && colorList.Any())
+            {
+                @foreach (var colors in colorList)
+                {
+                    var colersItem = colors.Children();
+                    var catId = colors.Name.ToLower().Replace(" ", "-");
+
+                    @if (colersItem != null && colersItem.Any())
+                    {
+                        <div class="category-block space-y-4" data-category="@catId">
+
+                            <!-- Rubrik för kategorin + Navigeringspilar -->
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xl font-bold text-white">@colors.Name</h4>
+
+                                <div class="flex gap-2">
+                                    <button onclick="scrollSlider('@catId', -1)" class="rounded bg-white/10 px-3 py-1 text-sm text-white hover:bg-white/20">
+                                        &#10094;
+                                    </button>
+                                    <button onclick="scrollSlider('@catId', 1)" class="rounded bg-white/10 px-3 py-1 text-sm text-white hover:bg-white/20">
+                                        &#10095;
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- SLIDER: Visar 4 färger i rad på desktop och scrollar horisontellt -->
+                            <div id="slider-@catId" class="no-scrollbar flex gap-6 overflow-x-auto scroll-smooth py-2">
+                                @foreach (var color in colersItem)
+                                {
+                                    var foilColor = color.Value("foilColors");
+                                    var colorImage = color.Value<IPublishedContent>("foilImage");
+
+                                    <!-- Varje färgkort tar upp 1/4 av ytan på desktop (4 i rad) -->
+                                    <div class="w-full flex-shrink-0 sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]">
+                                        <div class="flex h-full flex-col space-y-2 border border-white/10 bg-slate-800/50 p-3">
+
+                                            <div class="w-full overflow-hidden rounded-lg border border-white/10 bg-slate-950/40">
+                                                <img src="@colorImage?.Url()" class="h-48 w-full object-cover">
+                                            </div>
+
+                                            <div class="flex flex-col space-y-1 pt-1">
+                                                <h5 class="text-base font-bold text-white">@color.Name</h5>
+
+                                                @if (!string.IsNullOrEmpty(foilColor?.ToString()))
+                                                {
+                                                    <h6 class="w-fit rounded bg-white/10 px-2 py-1 font-mono text-xs font-medium text-slate-300">
+                                                        @foilColor
+                                                    </h6>
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+    </div>
+</div>
+
+<!-- Göm fula scrollbars men behåll scroll-funktion -->
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
+<!-- JS för filter och slider-pilar -->
+<script>
+    function filterCategory(catId, btn) {
+        document.querySelectorAll('.category-btn').forEach(b => {
+            b.classList.remove('bg-white/10', 'text-white', 'border', 'border-white/20');
+            b.classList.add('text-slate-300');
+        });
+        btn.classList.add('bg-white/10', 'text-white', 'border', 'border-white/20');
+        btn.classList.remove('text-slate-300');
+
+        document.querySelectorAll('.category-block').forEach(block => {
+            if (catId === 'all' || block.getAttribute('data-category') === catId) {
+                block.style.display = 'block';
+            } else {
+                block.style.display = 'none';
+            }
+        });
+    }
+
+    function scrollSlider(catId, direction) {
+        const slider = document.getElementById('slider-' + catId);
+        if (slider) {
+            const amount = slider.clientWidth * 0.8 * direction;
+            slider.scrollBy({ left: amount, behavior: 'smooth' });
         }
     }
-</div>
+</script>
