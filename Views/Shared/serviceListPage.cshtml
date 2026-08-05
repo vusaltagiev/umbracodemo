@@ -30,7 +30,7 @@
             <img src="@heroImage.Url()" class="absolute inset-0 h-full w-full mask-l-from-70% object-cover" style="border:2px solid blue;">
         }
         <div class="relative z-10 grid grid-cols-1 items-center px-8 py-30 md:grid-cols-2">
-            <div class="max-w-xl space-y-4 border border-white/10 bg-black/40 p-6 backdrop-blur-md md:p-8">
+            <div class="max-w-xl space-y-4 border border-white/10 p-6 backdrop-blur-md md:p-8">
                 @if (!string.IsNullOrEmpty(titleString))
                 {
                     <h1 class="mb-4 text-4xl font-extrabold tracking-tighter text-white sm:text-6xl sm:leading-none">
@@ -47,7 +47,7 @@
     </div>
 }
 
-<div class="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-3">
+<div class="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-4">
     @if (serviceListPage != null && serviceListPage.Count() > 0)
     {
         @foreach (var service in serviceListPage)
@@ -63,7 +63,7 @@
                   
                 <div class="flex w-full flex-col items-center space-y-2">
                     <h4 class="text-lg font-semibold text-gray-900">@serviceHeadline</h4>
-                    <p class="text-sm text-gray-600">
+                    <p class="mt-4 text-sm text-gray-600">
                         @description
                     </p>
                    </div>

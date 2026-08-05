@@ -10,20 +10,20 @@
 }
 
 <!-- Huvudbox med snygg bakgrund -->
-<div class="mx-auto w-full max-w-7xl border border-white/10 bg-zinc-900 p-6 text-white shadow-xl backdrop-blur-md md:p-8">
+<div class="mx-auto w-full max-w-7xl border border-white/10 p-6 text-black shadow-xl backdrop-blur-md md:p-8">
 
     <div class="flex flex-col gap-8 md:flex-row">
 
         <!-- VÄNSTERSPALT: Kategorier (utifrån colors.Name) -->
         <div class="w-full flex-shrink-0 space-y-3 border-b border-white/10 pb-6 md:w-64 md:border-r md:border-b-0 md:pr-6 md:pb-0">
-            <h3 class="mb-4 text-xs font-bold tracking-wider text-slate-400 uppercase">
+            <h3 class="mb-4 text-xs font-bold tracking-wider text-black uppercase">
                 Välj kategori
             </h3>
 
             <nav class="flex flex-row gap-2 overflow-x-auto pb-2 md:flex-col md:overflow-visible md:pb-0">
                 <!-- Visa alla -->
                 <button onclick="filterCategory('all', this)"
-                        class="category-btn active-btn border border-white/20 bg-white/10 px-4 py-2.5 text-left text-sm font-medium whitespace-nowrap text-white transition-all">
+                        class="category-btn active-btn border border-white/20 bg-[#f3ede6] px-4 py-2.5 text-left text-sm font-medium whitespace-nowrap text-black transition-all hover:bg-[#c9a97e] hover:text-black">
                     Alla färger
                 </button>
 
@@ -33,7 +33,7 @@
                     {
                         var catId = colors.Name.ToLower().Replace(" ", "-");
                         <button onclick="filterCategory('@catId', this)"
-                                class="category-btn px-4 py-2.5 text-left text-sm font-medium whitespace-nowrap text-slate-300 transition-all hover:bg-white/5 hover:text-white">
+                                class="category-btn px-4 py-2.5 text-left text-sm font-medium whitespace-nowrap text-black transition-all hover:bg-[#c9a97e] hover:text-black">
                             @colors.Name
                         </button>
                     }
@@ -56,39 +56,40 @@
 
                             <!-- Rubrik för kategorin + Navigeringspilar -->
                             <div class="flex items-center justify-between">
-                                <h4 class="text-xl font-bold text-white">@colors.Name</h4>
+                                <h4 class="text-xl font-bold text-black">@colors.Name</h4>
 
                                 <div class="flex gap-2">
-                                    <button onclick="scrollSlider('@catId', -1)" class="rounded bg-white/10 px-3 py-1 text-sm text-white hover:bg-white/20">
+                                    <p> </p>
+                                    <button onclick="scrollSlider('@catId', -1)" class="rounded bg-[#c9a97e] px-3 py-1 text-sm text-black hover:bg-[#f3ede6]">
                                         &#10094;
                                     </button>
-                                    <button onclick="scrollSlider('@catId', 1)" class="rounded bg-white/10 px-3 py-1 text-sm text-white hover:bg-white/20">
+                                    <button onclick="scrollSlider('@catId', 1)" class="rounded bg-[#c9a97e] px-3 py-1 text-sm text-black hover:bg-[#f3ede6]">
                                         &#10095;
                                     </button>
                                 </div>
                             </div>
 
                             <!-- SLIDER: Visar 4 färger i rad på desktop och scrollar horisontellt -->
-                            <div id="slider-@catId" class="no-scrollbar flex gap-6 overflow-x-auto scroll-smooth py-2">
+                            <div id="slider-@catId" class="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth py-2">
                                 @foreach (var color in colersItem)
                                 {
                                     var foilColor = color.Value("foilColors");
                                     var colorImage = color.Value<IPublishedContent>("foilImage");
 
                                     <!-- Varje färgkort tar upp 1/4 av ytan på desktop (4 i rad) -->
-                                    <div class="w-full flex-shrink-0 sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]">
-                                        <div class="flex h-full flex-col space-y-2 border border-white/10 bg-slate-800/50 p-3">
+                                    <div class="w-full flex-shrink-0 snap-center sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]">
+                                        <div class="flex h-full flex-col space-y-2 border border-white/10 p-3">
 
-                                            <div class="w-full overflow-hidden rounded-lg border border-white/10 bg-slate-950/40">
+                                            <div class="drop-shadow-xl/50 w-full overflow-hidden rounded-lg border border-white/10 bg-slate-950/40">
                                                 <img src="@colorImage?.Url()" class="h-48 w-full object-cover">
                                             </div>
 
                                             <div class="flex flex-col space-y-1 pt-1">
-                                                <h5 class="text-base font-bold text-white">@color.Name</h5>
+                                                <h5 class="text-base font-bold text-black">@color.Name</h5>
 
                                                 @if (!string.IsNullOrEmpty(foilColor?.ToString()))
                                                 {
-                                                    <h6 class="w-fit rounded bg-white/10 px-2 py-1 font-mono text-xs font-medium text-slate-300">
+                                                    <h6 class="w-fit rounded bg-[#f3ede6] px-2 py-1 font-mono text-xs font-medium text-black">
                                                         @foilColor
                                                     </h6>
                                                 }
@@ -124,11 +125,11 @@
 <script>
     function filterCategory(catId, btn) {
         document.querySelectorAll('.category-btn').forEach(b => {
-            b.classList.remove('bg-white/10', 'text-white', 'border', 'border-white/20');
-            b.classList.add('text-slate-300');
+            b.classList.remove('bg-[#c9a97e]/10', 'text-black', 'border', 'border-white/20');
+            b.classList.add('text-black');
         });
-        btn.classList.add('bg-white/10', 'text-white', 'border', 'border-white/20');
-        btn.classList.remove('text-slate-300');
+        btn.classList.add('bg-[#c9a97e]/10', 'text-black', 'border', 'border-white/20');
+        btn.classList.remove('text-black');
 
         document.querySelectorAll('.category-block').forEach(block => {
             if (catId === 'all' || block.getAttribute('data-category') === catId) {
