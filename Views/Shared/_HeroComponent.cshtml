@@ -1,0 +1,64 @@
+﻿@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Models.Blocks;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    var heroBlockList = Model?.Value<BlockListModel>("Hero");
+    var heroContent = heroBlockList?.FirstOrDefault()?.Content;
+
+    var heroTitle = heroContent?.Value<string>("HeroTitle");
+    var heroDescription = heroContent?.Value<string>("HeroDescription");
+    var heroImage = heroContent?.Value<IPublishedContent>("HeroImage");
+
+    var primaryButton = heroContent?.Value<Link>("primaryButton");
+    var secondaryButton = heroContent?.Value<Link>("secondaryButton");
+
+    var titleColor = heroContent?.Value<string>("titleColor");
+    var descriptionColor = heroContent?.Value<string>("descriptionColor");
+}
+
+@if (!string.IsNullOrEmpty(heroTitle) || heroImage != null)
+{
+    @* <div class="section container"> *@
+        <div class="relative min-h-[500px] w-full overflow-hidden">
+            @if (heroImage != null)
+            {
+                <div class="bg-gradient-to-r absolute inset-0 from-black/70 via-black/30 to-transparent"></div>
+                <img src="@heroImage.Url()" class="absolute inset-0 h-full w-full mask-l-from-70% object-cover" style="border:2px solid blue;">
+            }
+            <div class="relative z-10 grid grid-cols-1 items-center px-8 py-30 md:grid-cols-2">
+                <div class="max-w-xl space-y-4 border border-white/10 p-6 backdrop-blur-md md:p-8">
+                    @if (!string.IsNullOrEmpty(heroTitle))
+                    {
+                        <h1 class="mb-4 text-4xl font-extrabold tracking-tighter text-white sm:text-6xl sm:leading-none"
+                        style="@(!string.IsNullOrWhiteSpace(titleColor) ? $"color: #{titleColor.TrimStart('#')};" : null)">
+                            @heroTitle
+                        </h1>
+                    }
+                    @if (!string.IsNullOrEmpty(heroDescription))
+                    {
+                        <p class="max-w-2xl leading-relaxed font-normal text-zinc-300 sm:text-lg"
+                       style="@(!string.IsNullOrWhiteSpace(descriptionColor) ? $"color: #{descriptionColor.TrimStart('#')};" : null)">
+                            @heroDescription
+                        </p>
+                    }
+
+                    @if (primaryButton != null || secondaryButton != null)
+                    {
+                        @if (primaryButton != null)
+                        {
+                        <a href="@primaryButton.Url" target="@primaryButton.Target" class="btn font-medium">
+                            @(string.IsNullOrEmpty(primaryButton.Name) ? "Läs mer" : primaryButton.Name)
+                            </a>
+                        }
+                        @if (secondaryButton != null)
+                        {
+                        <a href="@secondaryButton.Url" target="@secondaryButton.Target" class="btn font-medium">
+                            @(string.IsNullOrEmpty(secondaryButton.Name) ? "Läs mer" : secondaryButton.Name)
+                        </a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    @* </div> *@
+}

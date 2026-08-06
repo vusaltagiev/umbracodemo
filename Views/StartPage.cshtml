@@ -3,37 +3,21 @@
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = "master.cshtml";
-    var heroTitle = Model.HeroTitle;
-    var heroText = Model.HeroText;
-    var heroImages = Model.HeroImage;
 }
 
-<div class="relative h-dvh w-full">
-    @if (heroImages != null && heroImages.Count() > 0)
-    {
-        foreach (var image in heroImages)
-        {
-            <img src=" @image?.Url()" class="h-full w-full mask-l-from-85% object-cover" style="border:2px solid blue;">
-            @* <div class="bg-gradient-to-r absolute inset-0 from-white/30 via-white/10 to-transparent"></div> *@
-        }
-    }
-
-    <div class="absolute inset-0 z-10 grid grid-cols-1 items-center px-8 md:grid-cols-2" style="border:2px solid red;">
-        <div style="border:2px solid red" ;>
-            <div class="max-w-xl space-y-4 border border-white/5 bg-white/5 p-6 backdrop-blur-md md:p-8">
-                <h1 class="text-4xl leading-tight font-semibold tracking-tight text-black sm:text-5xl">@heroTitle</h1>
-                <p class="text-lg leading-relaxed text-black">@heroText</p>
-                <a class="btn">Våra tjänster</a>
-            </div>
-        </div>
-    </div>
+<div class="section container">
+    @await Html.PartialAsync("~/Views/Shared/_HeroComponent.cshtml", Model)
 </div>
+
+<div class="section container">
     <div class="mb-5">
         @await Html.PartialAsync("~/Views/Shared/serviceList.cshtml")
     </div>
-    <div class="mt-5">
+    @* <div class="mt-5">
         @await Html.PartialAsync("~/Views/Shared/ColorListComponent.cshtml")
-    </div>
+    </div> *@
     <div class="mt-5">
         @await Html.PartialAsync("~/Views/Shared/BeforeAfterImageContainer.cshtml")
     </div>
+</div>
+    

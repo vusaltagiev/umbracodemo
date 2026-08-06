@@ -1,46 +1,11 @@
-﻿@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Contact>
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Contact>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
-@using Umbraco.Cms.Core.Models.Blocks;
 @{
     Layout = "master.cshtml";
-    var heroBlockList = Model.Value<BlockListModel>("Hero");
-    var heroContent = heroBlockList?.FirstOrDefault()?.Content;
-
-    var heroTitle = heroContent?.Value("HeroTitle");
-    var heroDescription = heroContent?.Value("HeroDescription");
-    var heroImage = heroContent?.Value<IPublishedContent>("HeroImage");
-
-    var titleString = heroTitle?.ToString();
-    var descriptionString = heroDescription?.ToString();
 }
 
 
 
 <div class="section container">
-    @if (!string.IsNullOrEmpty(titleString) || heroImage != null)
-    {
-        <div class="relative min-h-[500px] w-full overflow-hidden">
-            @if (heroImage != null)
-            {
-                <div class="bg-gradient-to-r absolute inset-0 from-black/70 via-black/30 to-transparent"></div>
-                <img src="@heroImage.Url()" class="absolute inset-0 h-full w-full mask-l-from-70% object-cover" style="border:2px solid blue;">
-            }
-            <div class="relative z-10 grid grid-cols-1 items-center px-8 py-30 md:grid-cols-2">
-                <div class="max-w-xl space-y-4 border border-white/10 bg-black/40 p-6 backdrop-blur-md md:p-8">
-                    @if (!string.IsNullOrEmpty(titleString))
-                    {
-                        <h1 class="mb-4 text-4xl font-extrabold tracking-tighter text-white sm:text-6xl sm:leading-none">
-                            @heroTitle
-                        </h1>
-
-                    }
-                    @if (!string.IsNullOrEmpty(descriptionString))
-                    {
-                        <p class="max-w-2xl leading-relaxed font-normal text-zinc-300 text-white sm:text-lg">@heroDescription</p>
-                    }
-                </div>
-            </div>
-        </div>
-    }
+    @await Html.PartialAsync("~/Views/Shared/_HeroComponent.cshtml", Model)
 </div>
